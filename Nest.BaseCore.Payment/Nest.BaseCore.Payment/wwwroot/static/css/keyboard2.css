@@ -1,0 +1,342 @@
+﻿body, html, div, label, ul, li, input, img, textarea, span {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    list-style: none;
+    border: 0;
+    padding: 0;
+    margin: 0;
+}
+
+img {
+    vertical-align: middle;
+}
+
+dl, dt, dd {
+    margin: 0;
+}
+
+input:focus {
+    background: inherit;
+}
+
+html {
+    font-size: 62.5%;
+}
+
+a {
+    text-decoration: none;
+}
+
+html, body, .payment {
+    width: 100%;
+    height: 100%;
+}
+
+.payment {
+    position: relative;
+    background: #f2f2f2;
+}
+
+    .payment .payment_bg {
+        height: 128px;
+        background: #43C167;
+    }
+
+    .payment .payment_in {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: auto;
+        overflow: hidden;
+    }
+
+    .payment .payment_title {
+        text-align: center;
+        color: #fff;
+        padding: 13px 0;
+    }
+
+        .payment .payment_title img {
+            width: 4rem;
+            height: 4rem;
+            margin-right: 5px;
+            vertical-align: top;
+        }
+
+        .payment .payment_title .payment_details {
+            text-align: left;
+            display: inline-block;
+            line-height: 2rem;
+        }
+
+        .payment .payment_title h2 {
+            margin: 0;
+            font-size: 1.5rem;
+            font-weight: normal;
+        }
+
+        .payment .payment_title p {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+    .payment .over {
+        height: 49px;
+        line-height: 49px;
+        padding-left: 36px;
+        text-align: left;
+        background: #FAFAFA url("../images/packet.png") no-repeat 11px center;
+        background-size: 16px auto;
+        border-radius: 6px;
+        border: 1px solid #E6E7E8;
+        width: 90%;
+        box-sizing: border-box;
+        margin: 14px auto;
+        font-size: 1.2rem;
+        color: #666;
+    }
+
+        .payment .over span {
+            color: #f6c86b;
+            padding: 0 4px;
+            line-height: 49px;
+            display: inline-block;
+        }
+
+.monetary {
+    width: 90%;
+    height: 113px;
+    border-radius: 3px;
+    background: #fff;
+    padding: 0 17px;
+    margin: 0 auto;
+    color: #2D2D2D;
+    font-family: sans-serif,Arial,Helvetica;
+}
+
+    .monetary h4 {
+        margin: 0;
+        padding: 17px 0 18px 0;
+        font-size: 1.3rem;
+        font-weight: normal;
+        color: #999;
+    }
+
+    .monetary .money {
+        height: 42px;
+        font-weight: bold;
+        font-size: 1.8rem;
+    }
+
+        .monetary .money strong {
+            display: block;
+            float: left;
+            padding-right: 6px;
+            font-size: 3.8rem;
+            min-width: 25px;
+            line-height: 42px;
+        }
+
+        .monetary .money span {
+            float: left;
+            margin-top: 15px;
+            display: block;
+        }
+
+        .monetary .money .line {
+            background: #43C167;
+            margin-top: 0;
+            width: 2px;
+            height: 42px;
+            animation: guidCircle 1.2s linear infinite;
+        }
+
+@keyframes guidCircle {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+.keyboard {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    top: auto;
+    width: 100%;
+    height: auto;
+    overflow: hidden;
+    background: #fff;
+    text-align: center;
+    font-size: 2rem;
+    font-family: sans-serif,Arial,Helvetica;
+}
+
+    .keyboard .key_row {
+        height: 72px;
+        border-top: 1px solid #E7E7E8;
+        line-height: 72px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .keyboard .key_cell, .keyboard .key_0, .keyboard .key_d, .keyboard .pay-float {
+        float: left;
+        border-right: 1px solid #E7E7E8;
+        width: 25%;
+        height: 72px;
+    }
+
+    .keyboard .key_0 {
+        width: 50%;
+    }
+
+    .keyboard .key_d {
+        background: url("../images/key_c.png") no-repeat center center;
+        background: ur;
+        background-size: 27px auto;
+    }
+
+    .keyboard .key_confirm {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        top: auto;
+        width: 25%;
+        background: #43C167;
+        padding-top: 86px;
+        color: #fff;
+        height: 216px;
+    }
+
+        .keyboard .key_confirm span {
+            display: block;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+            background: url("../images/icon_wallet5.png") no-repeat center center;
+            background-size: 38px auto;
+            animation: ro 2s linear infinite;
+            -o-animation: ro 2s linear infinite;
+            -webkit-animation: ro 2s linear infinite;
+            -moz-animation: ro 2s linear infinite;
+        }
+
+    .keyboard .current {
+        color: #85d399;
+    }
+
+.masking {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    display: none;
+    z-index: 888;
+}
+
+@keyframes ro {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.showToast {
+    position: absolute;
+    left: 0;
+    top: 60%;
+    right: 0;
+    color: #fff;
+    font-size: 1.2rem;
+    line-height: 30px;
+    z-index: 999;
+    text-align: center;
+    display: none;
+}
+
+    .showToast span {
+        background: #333333;
+        margin: 0 auto;
+        display: inline-block;
+        border-radius: 3px;
+        padding: 0 10px;
+    }
+
+.code {
+    position: fixed;
+    width: 100%;
+    height: 100vh;
+    background: #fff url("../images/code.jpg") no-repeat center center;
+    background-size: contain;
+    left: 0;
+    top: 0;
+    z-index: 9;
+    display: none;
+}
+
+.alipayExcute {
+    display: none;
+}
+
+@media screen and (max-width:320px) {
+    .monetary .money strong {
+        font-size: 3.4rem;
+    }
+
+    .keyboard .key_cell, .keyboard .key_0, .keyboard .key_d, .keyboard .pay-float {
+        height: 56px;
+    }
+
+    .keyboard .key_row {
+        height: 56px;
+        line-height: 56px;
+    }
+
+    .keyboard .key_confirm {
+        height: 168px;
+        padding-top: 56px;
+    }
+
+        .keyboard .key_confirm span {
+            width: 56px;
+            height: 56px;
+        }
+
+    .monetary {
+        height: 100px;
+    }
+
+        .monetary h4 {
+            padding: 10px 0;
+        }
+
+        .monetary .money .line {
+            height: 36px;
+        }
+
+        .monetary .money span {
+            margin-top: 12px;
+        }
+
+    .payment .payment_title {
+        padding: 10px 0;
+    }
+
+    .payment .over {
+        margin: 10px auto;
+    }
+}
