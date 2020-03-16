@@ -171,38 +171,38 @@
         /// <summary>
         /// 小程序配置 APPID 
         /// </summary>
-        public const string AppIdBySamllApp = "wxe8c50832ad372392";
+        public const string AppIdByMiniApp = "wxe8c50832ad372392";
         /// <summary>
         /// 小程序配置 MCHID 
         /// </summary>
-        public const string MchIdBySamllApp = "1522743841";
+        public const string MchIdByMiniApp = "1522743841";
         /// <summary>
         /// 小程序配置  APP
         /// </summary>
-        public const string SecretBySamllApp = "4ee65dcebbed82536089cf4be0b00087";
+        public const string SecretByMiniApp = "4ee65dcebbed82536089cf4be0b00087";
         /// <summary>
         ///小程序配置  Key APP
         /// </summary>
-        public const string KeyBySamllApp = "GXL00000000000000000000000000000";
+        public const string KeyByMiniApp = "GXL00000000000000000000000000000";
         #endregion
 
         #region 扫码小程序配置
         /// <summary>
         /// 扫码小程序配置 APPID 
         /// </summary>
-        public const string AppIdByScanSamllApp = "wxe8c50832ad372392"; //wx929d8e91a27e9420
+        public const string AppIdByScanMiniApp = "wxe8c50832ad372392"; //wx929d8e91a27e9420
         /// <summary>
         /// 扫码小程序配置 MCHID 
         /// </summary>
-        public const string MchIdByScanSamllApp = "1522743841";//1502128331
+        public const string MchIdByScanMiniApp = "1522743841";//1502128331
         /// <summary>
         /// 扫码小程序配置  APP
         /// </summary>
-        public const string SecretByScanSamllApp = "4ee65dcebbed82536089cf4be0b00087";//ffb56018d2f8d174957ae40d96f6f279
+        public const string SecretByScanMiniApp = "4ee65dcebbed82536089cf4be0b00087";//ffb56018d2f8d174957ae40d96f6f279
         /// <summary>
         /// 扫码小程序配置  Key APP
         /// </summary>
-        public const string KeyByScanSamllApp = "GXL00000000000000000000000000000";//GXL00000000000000000000000000000
+        public const string KeyByScanMiniApp = "GXL00000000000000000000000000000";//GXL00000000000000000000000000000
         #endregion
 
     }

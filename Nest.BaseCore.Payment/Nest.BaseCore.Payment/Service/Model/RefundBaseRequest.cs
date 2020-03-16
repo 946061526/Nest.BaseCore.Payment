@@ -12,9 +12,17 @@ namespace Nest.BaseCore.Payment.Service
     public class RefundBaseRequest
     {
         /// <summary>
+        /// 交易号
+        /// </summary>
+        public string TradeNo { get; set; }
+        /// <summary>
         /// 订单编号
         /// </summary>
         public string OrderCode { get; set; }
+        /// <summary>
+        /// 订单金额
+        /// </summary>
+        public decimal OrderMoney { get; set; }
         /// <summary>
         /// 退款金额
         /// </summary>

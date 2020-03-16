@@ -26,17 +26,13 @@ public enum BrowserType
     /// <summary>
     /// 小程序
     /// </summary>
-    SamllApp = 5,
+    MiniApp = 5,
     /// <summary>
-    /// APP客户端（速微开店宝）
+    /// APP客户端
     /// </summary>
     App = 6,
     /// <summary>
-    /// APP客户端（速微生活）
-    /// </summary>
-    AppLife = 7,
-    /// <summary>
     /// 扫码小程序
     /// </summary>
-    ScanSamllApp = 8,
+    ScanMiniApp = 8,
 }

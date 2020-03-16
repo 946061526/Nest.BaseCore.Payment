@@ -83,7 +83,7 @@ namespace Nest.BaseCore.Payment.PaymentSDK.Wechat
                             CertPath = WechatConfig.SSLCERT_Life_APP_PATH;
                             CertPwd = WechatConfig.SSLCERT_Life_APP_PASSWORD;
                             break;
-                        case WechatConfig.AppIdBySamllApp:
+                        case WechatConfig.AppIdByMiniApp:
                             CertPath = WechatConfig.SSLCERT_Life_APP_PATH;
                             CertPwd = WechatConfig.SSLCERT_Life_APP_PASSWORD;
                             break;
