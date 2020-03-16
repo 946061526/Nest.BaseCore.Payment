@@ -18,6 +18,8 @@ namespace Nest.BaseCore.Payment.Service
 
         }
 
+        #region 私有变量
+
         private string ModulsName = "WechatPayment";
         private string AppId
         {
@@ -80,6 +82,8 @@ namespace Nest.BaseCore.Payment.Service
             }
         }
 
+        #endregion
+
         /// <summary>
         /// 微信支付通知地址
         /// </summary>
@@ -104,11 +108,7 @@ namespace Nest.BaseCore.Payment.Service
         public override ThirdOpenAuthorizeViewModel GetThirdOAuth(string code)
         {
             string accessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token";
-            string accessUrl = string.Format("{0}?appid={1}&secret={2}&code={3}&grant_type=authorization_code",
-                accessTokenUrl,
-                WechatConfig.AppId,
-                WechatConfig.Secret,
-                code);
+            string accessUrl = $"{accessTokenUrl}?appid={WechatConfig.AppId}&secret={WechatConfig.Secret}&code={code}&grant_type=authorization_code";
             var oauthTokenResponse = HttpHelper.HttpGet<dynamic>(accessUrl);
             ThirdOpenAuthorizeViewModel result = new ThirdOpenAuthorizeViewModel
             {
@@ -133,12 +133,7 @@ namespace Nest.BaseCore.Payment.Service
             redirectUrl = Utils.UrlEncode(redirectUrl);
             string wxScope = scope == ThirdOAuthScope.SnsapiBase ? "snsapi_base" : "snsapi_userinfo";
             string wechatOauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize";
-            string oauthUrl = string.Format("{0}?appid={1}&redirect_uri={2}&response_type=code&scope={3}&state={4}#wechat_redirect",
-                wechatOauthUrl,
-                WechatConfig.AppId,
-                redirectUrl,
-                wxScope,
-                state);
+            string oauthUrl = $"{wechatOauthUrl}?appid={WechatConfig.AppId}&redirect_uri={redirectUrl}&response_type=code&scope={wxScope}&state={state}#wechat_redirect";
 
             return oauthUrl;
         }
@@ -288,7 +283,7 @@ namespace Nest.BaseCore.Payment.Service
 
             //2.2、记录请求日志
             //记录微信退款调用的日志
-            string url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
+            //string url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
             //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderRefund.OrderCode, ThirdPlatformType.WechatPay, url, data.ToXml(), DateTime.Now, result.ToXml(), DateTime.Now, true);
 
             //3、退款结果验证

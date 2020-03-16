@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Nest.BaseCore.Payment.Service
 {
@@ -8,14 +9,12 @@ namespace Nest.BaseCore.Payment.Service
     public sealed class PaymentFactory
     {
         private PaymentFactory() { }
-        /// <summary>
-        /// 收款方门店ID
-        /// </summary>
-        public string StoreId { get; set; }
+
         /// <summary>
         /// 静态实例
         /// </summary>
         public static PaymentFactory Instance { get; } = new PaymentFactory();
+
         /// <summary>
         /// 创建授权对象
         /// </summary>
@@ -36,15 +35,15 @@ namespace Nest.BaseCore.Payment.Service
         {
             switch (sourceOption)
             {
-                //case BrowserType.Alipay:
-                //    return new AlipayPayment(sourceOption);
-                //case BrowserType.Wechat:
-                //    return new WechatPayment(sourceOption);
+                case BrowserType.Alipay:
+                    return new AlipayPayment(sourceOption);
+                case BrowserType.Wechat:
+                    return new WechatPayment(sourceOption);
                 default:
                     throw new PaymentException("未找到可以使用的授权通道");
-
             }
         }
+
         /// <summary>
         /// 创建第三方实现对象
         /// </summary>
@@ -64,6 +63,7 @@ namespace Nest.BaseCore.Payment.Service
                 return (T)CreateOffline(platformType, sourceOption, acsSubNo);
             }
         }
+
         /// <summary>
         /// 创建线下支付通道
         /// </summary>
@@ -72,31 +72,31 @@ namespace Nest.BaseCore.Payment.Service
         /// <returns></returns>
         private IPaymentService CreateOffline(PaymentPlatformType platformType, BrowserType sourceOption = BrowserType.Wechat, string acsSubNo = "")
         {
-            //var flag = AppSettingsHelper.Configuration["ConfigConstants.IsOpenAcsPayment"].ToBoolean();
+            //var flag = Convert.ToBoolean(AppSettingsHelper.Configuration["ConfigConstants.IsOpenAcsPayment"]);
             switch (platformType)
             {
-                //case PaymentPlatformType.Alipay:
-                //    //中金暂不支持支付宝支付，这里启用公司支付宝
-                //    //if (flag)
-                //    //{
-                //    //    return new AcsPayment(sourceOption);
-                //    //}
-                //    return new AlipayPayment(sourceOption);
+                case PaymentPlatformType.Alipay:
+                    //中金暂不支持支付宝支付，这里启用公司支付宝
+                    //if (flag)
+                    //{
+                    //    return new AcsPayment(sourceOption);
+                    //}
+                    return new AlipayPayment(sourceOption);
                 //case PaymentPlatformType.Zhongjin:
                 //    return new AcsPayment(sourceOption);
-                //case PaymentPlatformType.Wechat:
-                //    //if (flag && !acsSubNo.IsNullOrWhiteSpace() && !ConfigConstants.PaymentWechatStore.Contains(StoreId))
-                //    //{
-                //    //    return new AcsPayment(sourceOption);
-                //    //}
-                //    return new WechatPayment(sourceOption);
+                case PaymentPlatformType.Wechat:
+                    //if (flag && !acsSubNo.IsNullOrWhiteSpace() && !ConfigConstants.PaymentWechatStore.Contains(StoreId))
+                    //{
+                    //    return new AcsPayment(sourceOption);
+                    //}
+                    return new WechatPayment(sourceOption);
                 //case PaymentPlatformType.Blance:
                 //    return new BalancePayment(sourceOption);
                 default:
                     throw new PaymentException("未找到可以使用的支付通道");
-
             }
         }
+
         /// <summary>
         /// 创建线上支付通道
         /// </summary>
@@ -107,15 +107,14 @@ namespace Nest.BaseCore.Payment.Service
         {
             switch (platformType)
             {
-                //case PaymentPlatformType.Alipay:
-                //    return new AlipayPayment(sourceOption);
-                //case PaymentPlatformType.Wechat:
-                //    return new WechatPayment(sourceOption);
+                case PaymentPlatformType.Alipay:
+                    return new AlipayPayment(sourceOption);
+                case PaymentPlatformType.Wechat:
+                    return new WechatPayment(sourceOption);
                 //case PaymentPlatformType.Blance:
                 //    return new BalancePayment(sourceOption);
                 default:
                     throw new PaymentException("未找到可以使用的支付通道");
-
             }
         }
     }

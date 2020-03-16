@@ -71,7 +71,7 @@ namespace Nest.BaseCore.Payment.PaymentSDK.AcsPay
                     }
                 }
             }
-            catch(Exception ex)
+            catch
             {
 
             }

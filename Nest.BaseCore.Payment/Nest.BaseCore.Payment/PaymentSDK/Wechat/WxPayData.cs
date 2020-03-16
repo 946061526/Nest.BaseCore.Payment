@@ -126,7 +126,7 @@ namespace Nest.BaseCore.Payment.PaymentSDK.Wechat
             try
             {
                 //错误是没有签名
-                if (m_values["return_code"] != "SUCCESS")
+                if (m_values["return_code"].ToString() != "SUCCESS")
                 {
                     return m_values;
                 }
@@ -245,7 +245,7 @@ namespace Nest.BaseCore.Payment.PaymentSDK.Wechat
         * 检测签名是否正确
         * 正确返回true，错误抛异常
         */
-        public bool CheckSign(string key=WechatConfig.Key)
+        public bool CheckSign(string key = WechatConfig.Key)
         {
             //如果没有设置签名，则跳过检测
             if (!IsSet("sign"))
