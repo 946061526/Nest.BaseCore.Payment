@@ -41,6 +41,7 @@ namespace Nest.BaseCore.Payment.Service
                 return subject;
             }
         }
+
         /// <summary>
         /// 支付宝支付通知地址
         /// </summary>
@@ -62,7 +63,7 @@ namespace Nest.BaseCore.Payment.Service
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public override ThirdOpenAuthorizeViewModel GetThridOAuth(string code)
+        public override ThirdOpenAuthorizeViewModel GetThirdOAuth(string code)
         {
             DefaultAopClient client = new DefaultAopClient(AliPayConfig.gatewayUrl, AliPayConfig.AppId, AliPayConfig.privatekey, "json", "1.0", AliPayConfig.sign_type, AliPayConfig.alipublickey, AliPayConfig.charset, false);
             AlipaySystemOauthTokenRequest request = new AlipaySystemOauthTokenRequest
@@ -87,16 +88,16 @@ namespace Nest.BaseCore.Payment.Service
         }
 
         /// <summary>
-        /// 获取验证地址
+        /// 获取第三方授权地址
         /// </summary>
         /// <param name="redirectUrl"></param>
-        /// <param name="scope"></param>
         /// <param name="state"></param>
+        /// <param name="scope"></param>
         /// <returns></returns>
-        public override string GetThridOAuthUrl(string redirectUrl, string state = "Alipay", ThridOAuthScope scope = ThridOAuthScope.SnsapiBase)
+        public override string GetThirdOAuthUrl(string redirectUrl, string state = "Alipay", ThirdOAuthScope scope = ThirdOAuthScope.SnsapiBase)
         {
             redirectUrl = Utils.UrlEncode(redirectUrl);
-            string aliScope = scope == ThridOAuthScope.SnsapiBase ? "auth_base" : "auth_user";
+            string aliScope = scope == ThirdOAuthScope.SnsapiBase ? "auth_base" : "auth_user";
             string oauthUrl = $"{AliPayConfig.AppAuthorizeUrl}?app_id={AliPayConfig.AppId}&scope={aliScope}&redirect_uri={redirectUrl}&state={state}";
 
             return oauthUrl;
@@ -118,7 +119,7 @@ namespace Nest.BaseCore.Payment.Service
             var sPara = GetAlipayRequestPost(requestMessage);
             //LogHelper.LogInfo("AlipayNotify->AlipayPayment", "支付宝支付回调通知：" + sPara.ToJsonString());
             //记录支付宝回调的日志
-            //WritePostThridApi(ThirdPlatformBusinessType.Payment, sPara["out_trade_no"], ThirdPlatformType.Alipay, requestMessage.RequestUri.LocalPath, sPara.ToJsonString(), DateTime.Now, "", DateTime.Now, true);
+            //WritePostThirdApi(ThirdPlatformBusinessType.Payment, sPara["out_trade_no"], ThirdPlatformType.Alipay, requestMessage.RequestUri.LocalPath, sPara.ToJsonString(), DateTime.Now, "", DateTime.Now, true);
             bool flag = AlipaySignature.RSACheckV1(sPara, AliPayConfig.alipublickey, AliPayConfig.charset, "RSA2", false);
             if (flag)
             {
@@ -238,13 +239,13 @@ namespace Nest.BaseCore.Payment.Service
                 response = client.Execute(request);
 
                 //记录支付宝调用的日志
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime, response.Body, DateTime.Now, true);
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime, response.Body, DateTime.Now, true);
             }
             catch (Exception ex)
             {
                 //LogHelper.LogError(" 主动查询支付结果 - 支付宝预付款订单 QueryPayResult", ex.ToString());
                 ////记录支付宝调用的日志
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime,
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime,
                 //    response.IsNull() ? ex.ToString() : response.Body, DateTime.Now, true);
             }
             if (response != null && !response.IsError)
@@ -277,6 +278,11 @@ namespace Nest.BaseCore.Payment.Service
             return res;
         }
 
+        /// <summary>
+        /// 发起订单退款
+        /// </summary>
+        /// <param name="refundRequest">退款申请参数</param>
+        /// <returns></returns>
         public override ApiResultModel<string> RefundPay(RefundBaseRequest refundRequest)
         {
             var res = new ApiResultModel<string>() { Code = ApiResultCode.Fail, Message = "fail" };
@@ -297,7 +303,7 @@ namespace Nest.BaseCore.Payment.Service
             AlipayTradeRefundResponse response = client.Execute(request);
             //2.2、记录请求日志
             //记录支付宝退款调用的日志
-            //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderRefund.OrderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.BizContent, DateTime.Now, response.Body, DateTime.Now, true);
+            //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderRefund.OrderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.BizContent, DateTime.Now, response.Body, DateTime.Now, true);
             if (response.Code != "10000")
             {
                 res.Message = response.Msg;
@@ -378,13 +384,13 @@ namespace Nest.BaseCore.Payment.Service
                 response = client.pageExecute(request, null, "post");
 
                 //记录支付宝调用的日志
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime, response.Body, DateTime.Now, true);
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime, response.Body, DateTime.Now, true);
             }
             catch (Exception ex)
             {
                 //LogHelper.LogError("提交支付宝预付款订单 SubmitPay", ex.ToString());
                 ////记录支付宝调用的日志
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime,
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime,
                 //    response.IsNull() ? ex.ToString() : response.Body, DateTime.Now, true);
 
             }
@@ -429,14 +435,14 @@ namespace Nest.BaseCore.Payment.Service
                 response = client.SdkExecute(request);
 
                 //记录支付宝调用的日志
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime, response.Body, DateTime.Now, true);
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime, response.Body, DateTime.Now, true);
 
             }
             catch (Exception ex)
             {
                 //LogHelper.LogError("提交支付宝预付款订单 SubmitPay", ex.ToString());
                 ////记录支付宝调用的日志
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime,
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.Alipay, AliPayConfig.gatewayUrl, request.ToJsonString(), reqTime,
                 //    response.IsNull() ? ex.ToString() : response.Body, DateTime.Now, true);
 
             }

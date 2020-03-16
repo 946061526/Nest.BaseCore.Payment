@@ -53,7 +53,7 @@
         ///// Key
         ///// </summary>
         //public const string Key = "GXL00000000000000000000000000000";
-        //正式（速微生活）
+        //正式
         /// <summary>
         /// APPID
         /// </summary>
@@ -110,7 +110,7 @@
         /// </summary>
         public const string KeyByApp = "GXL00000000000000000000000000000";
 
-        // 速微生活（用户端）
+        // （用户端）
         /// <summary>
         /// APPID APP
         /// </summary>
@@ -128,7 +128,7 @@
         /// </summary>
         public const string KeyByLifeApp = "GXL00000000000000000000000000000";
 #else
-        //测试 开店宝
+        //测试 kdb
         /// <summary>
         /// APPID APP
         /// </summary>
@@ -146,7 +146,7 @@
         /// </summary>
         public const string KeyByApp = "GXL00000000000000000000000000000";
 
-        // 速微生活（用户端）
+        // （用户端）
         /// <summary>
         /// APPID APP
         /// </summary>

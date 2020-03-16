@@ -96,7 +96,12 @@ namespace Nest.BaseCore.Payment.Service
             }
         }
 
-        public override ThirdOpenAuthorizeViewModel GetThridOAuth(string code)
+        /// <summary>
+        /// 根据Code获取第三方access_token信息
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public override ThirdOpenAuthorizeViewModel GetThirdOAuth(string code)
         {
             string accessTokenUrl = "https://api.weixin.qq.com/sns/oauth2/access_token";
             string accessUrl = string.Format("{0}?appid={1}&secret={2}&code={3}&grant_type=authorization_code",
@@ -117,16 +122,16 @@ namespace Nest.BaseCore.Payment.Service
         }
 
         /// <summary>
-        /// 获取验证地址
+        /// 获取第三方授权地址
         /// </summary>
         /// <param name="redirectUrl"></param>
-        /// <param name="scope"></param>
         /// <param name="state"></param>
+        /// <param name="scope"></param>
         /// <returns></returns>
-        public override string GetThridOAuthUrl(string redirectUrl, string state = "", ThridOAuthScope scope = ThridOAuthScope.SnsapiBase)
+        public override string GetThirdOAuthUrl(string redirectUrl, string state = "", ThirdOAuthScope scope = ThirdOAuthScope.SnsapiBase)
         {
             redirectUrl = Utils.UrlEncode(redirectUrl);
-            string wxScope = scope == ThridOAuthScope.SnsapiBase ? "snsapi_base" : "snsapi_userinfo";
+            string wxScope = scope == ThirdOAuthScope.SnsapiBase ? "snsapi_base" : "snsapi_userinfo";
             string wechatOauthUrl = "https://open.weixin.qq.com/connect/oauth2/authorize";
             string oauthUrl = string.Format("{0}?appid={1}&redirect_uri={2}&response_type=code&scope={3}&state={4}#wechat_redirect",
                 wechatOauthUrl,
@@ -179,7 +184,7 @@ namespace Nest.BaseCore.Payment.Service
                 result.Message = "签名错误";
                 return result;
             }
-            //WritePostThridApi(ThirdPlatformBusinessType.Payment, notifyData.GetValue("out_trade_no").ToString(), ThirdPlatformType.WechatPay, requestMessage.RequestUri.LocalPath, data, DateTime.Now, "", DateTime.Now, true);
+            //WritePostThirdApi(ThirdPlatformBusinessType.Payment, notifyData.GetValue("out_trade_no").ToString(), ThirdPlatformType.WechatPay, requestMessage.RequestUri.LocalPath, data, DateTime.Now, "", DateTime.Now, true);
 
             //检查支付结果中transaction_id是否存在
             if (!notifyData.IsSet("transaction_id"))
@@ -237,13 +242,18 @@ namespace Nest.BaseCore.Payment.Service
             return result;
         }
 
+        /// <summary>
+        /// 主动查询支付结果
+        /// </summary>
+        /// <param name="orderCode">平台交易单号</param>
+        /// <returns></returns>
         public override ApiResultModel<string> QueryPayResult(string orderCode)
         {
             throw new NotImplementedException();
         }
 
         /// <summary>
-        /// 发起订单退款（此方法，以后应拆分2个方法处理退款，一个更新退款状态，另一个MQ调用微信退款申请）
+        /// 发起订单退款
         /// </summary>
         /// <param name="refundRequest">退款申请参数</param>
         /// <returns></returns>
@@ -279,7 +289,7 @@ namespace Nest.BaseCore.Payment.Service
             //2.2、记录请求日志
             //记录微信退款调用的日志
             string url = "https://api.mch.weixin.qq.com/secapi/pay/refund";
-            //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderRefund.OrderCode, ThirdPlatformType.WechatPay, url, data.ToXml(), DateTime.Now, result.ToXml(), DateTime.Now, true);
+            //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderRefund.OrderCode, ThirdPlatformType.WechatPay, url, data.ToXml(), DateTime.Now, result.ToXml(), DateTime.Now, true);
 
             //3、退款结果验证
             if (result.GetValue("return_code").ToString() != "SUCCESS")
@@ -326,7 +336,8 @@ namespace Nest.BaseCore.Payment.Service
             }
         }
 
-        #region 微信公众号环境支付
+
+        #region private
 
         private string Subject
         {
@@ -356,7 +367,7 @@ namespace Nest.BaseCore.Payment.Service
         }
 
         /// <summary>
-        /// 获取微信支付JS订单参数
+        /// 获取微信支付JS订单参数（微信公众号环境支付）
         /// </summary>
         /// <param name="orderCode">订单号</param>
         /// <param name="userId">付款用户</param>
@@ -396,7 +407,7 @@ namespace Nest.BaseCore.Payment.Service
             try
             {
                 WxPayData unifiedOrderResult = jsApiPay.GetUnifiedOrderResult(data, NotifyUrl, Key);
-                //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.WechatPay, "JsApiPay", data.ToXml(), DateTime.Now, unifiedOrderResult.ToXml(), DateTime.Now, true);
+                //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.WechatPay, "JsApiPay", data.ToXml(), DateTime.Now, unifiedOrderResult.ToXml(), DateTime.Now, true);
                 result.Message = jsApiPay.GetJsApiParameters(Key);//获取H5调起JS API参数   
                 result.Code = ApiResultCode.Success;
                 return result;
@@ -415,11 +426,8 @@ namespace Nest.BaseCore.Payment.Service
             }
         }
 
-        #endregion
-
-        #region 浏览器环境支付
         /// <summary>
-        /// 获取Wap微信支付订单参数
+        /// 获取Wap微信支付订单参数（浏览器环境支付）
         /// </summary>
         /// <param name="orderCode">订单号</param>
         /// <param name="userId">付款用户</param>
@@ -453,7 +461,7 @@ namespace Nest.BaseCore.Payment.Service
             data.SetValue("scene_info", JsonHelper.SerializeObject(scene_info));
 
             WxPayData wxdata = WxPayApi.UnifiedOrder(data, NotifyUrl);
-            //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.WechatPay, "WxPayApi", data.ToXml(), DateTime.Now, wxdata.ToXml(), DateTime.Now, true);
+            //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.WechatPay, "WxPayApi", data.ToXml(), DateTime.Now, wxdata.ToXml(), DateTime.Now, true);
             if (wxdata.GetValue("return_code").ToString() == "FAIL")
             {
                 result.Message = wxdata.GetValue("return_msg").ToString();
@@ -474,11 +482,8 @@ namespace Nest.BaseCore.Payment.Service
             return result;
         }
 
-        #endregion
-
-        #region APP环境支付
         /// <summary>
-        /// 获取APP微信支付订单参数
+        /// 获取APP微信支付订单参数（APP环境支付）
         /// </summary>
         /// <param name="orderCode">订单号</param>
         /// <param name="userId">付款用户</param>
@@ -511,7 +516,7 @@ namespace Nest.BaseCore.Payment.Service
             //    key = WechatConfig.KeyByLifeApp;
             //}
             WxPayData wxdata = WxPayApi.UnifiedOrder(data, NotifyUrl, key: Key);
-            //WritePostThridApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.WechatPay, "WxPayApi APP", data.ToXml(), DateTime.Now, wxdata.ToXml(), DateTime.Now, true);
+            //WritePostThirdApi(ThirdPlatformBusinessType.Payment, orderCode, ThirdPlatformType.WechatPay, "WxPayApi APP", data.ToXml(), DateTime.Now, wxdata.ToXml(), DateTime.Now, true);
             if (wxdata.GetValue("return_code").ToString() == "FAIL")
             {
                 result.Message = wxdata.GetValue("return_msg").ToString();
@@ -547,6 +552,8 @@ namespace Nest.BaseCore.Payment.Service
             result.Message = JsonHelper.SerializeObject(appPaymentInfo);
             return result;
         }
+
         #endregion
+
     }
 }

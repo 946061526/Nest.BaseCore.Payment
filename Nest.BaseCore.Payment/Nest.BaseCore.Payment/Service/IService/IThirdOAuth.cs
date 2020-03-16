@@ -3,7 +3,7 @@
     /// <summary>
     /// 第三方平台授权
     /// </summary>
-    public interface IThridOAuth : IThrid
+    public interface IThirdOAuth : IThird
     {
         /// <summary>
         /// 获取验证地址
@@ -12,14 +12,14 @@
         /// <param name="state"></param>
         /// <param name="scope"></param>
         /// <returns></returns>
-        string GetThridOAuthUrl(string redirectUrl, string state = "", ThridOAuthScope scope = ThridOAuthScope.SnsapiBase);
+        string GetThirdOAuthUrl(string redirectUrl, string state = "", ThirdOAuthScope scope = ThirdOAuthScope.SnsapiBase);
 
         /// <summary>
         /// 获取第三方授权
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        ThirdOpenAuthorizeViewModel GetThridOAuth(string code);
+        ThirdOpenAuthorizeViewModel GetThirdOAuth(string code);
 
     }
 }

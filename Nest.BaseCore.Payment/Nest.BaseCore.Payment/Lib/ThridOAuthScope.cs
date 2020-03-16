@@ -3,7 +3,7 @@
     /// <summary>
     /// 第三方授权类型枚举
     /// </summary>
-    public enum ThridOAuthScope
+    public enum ThirdOAuthScope
     {
         /// <summary>
         /// 静默授权（不弹出授权页面，直接跳转）

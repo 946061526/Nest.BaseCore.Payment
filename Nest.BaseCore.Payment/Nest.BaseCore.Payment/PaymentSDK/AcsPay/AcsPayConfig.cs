@@ -69,13 +69,13 @@ namespace Nest.BaseCore.Payment.PaymentSDK
         public const string CltNo = "15338358980";  //客户号
         public const string CltPid = "1820015000070121";  //平台客户号
         public const string SubNo = "1820015000073761"; //资金账号 1817811000066431
-        public const string CltNm = "东莞市速微网络科技有限公司";  //户名，流水号： <PtnSrl>2153198652873</PtnSrl> <PlatSrl>1820000010585127</PlatSrl>
+        public const string CltNm = "xxxx有限公司";  //户名，流水号： <PtnSrl>2153198652873</PtnSrl> <PlatSrl>1820000010585127</PlatSrl>
 
         //虚拟账号
         public const string CltNo_VR = "15338358980_VR";  //客户号
         public const string CltPid_VR = "1818816000066385";  //平台客户号
         public const string SubNo_VR = "1818816000069956"; //资金账号 1817811000066431
-        public const string CltNm_VR = "速微网络旗舰店VR";  //户名
+        public const string CltNm_VR = "xxx网络旗舰店VR";  //户名
 #endregion
     }
 }

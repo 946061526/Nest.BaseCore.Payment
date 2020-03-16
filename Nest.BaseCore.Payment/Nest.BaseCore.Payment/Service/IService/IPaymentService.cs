@@ -5,7 +5,7 @@ namespace Nest.BaseCore.Payment.Service
     /// <summary>
     /// 支付业务接口
     /// </summary>
-    public interface IPaymentService : IThrid
+    public interface IPaymentService : IThird
     {
         /// <summary>
         /// 支付通知地址

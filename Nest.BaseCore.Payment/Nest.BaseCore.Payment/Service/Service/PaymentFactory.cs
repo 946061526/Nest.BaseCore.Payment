@@ -22,7 +22,7 @@ namespace Nest.BaseCore.Payment.Service
         /// <typeparam name="T"></typeparam>
         /// <param name="sourceOption"></param>
         /// <returns></returns>
-        public T Create<T>(BrowserType sourceOption = BrowserType.Wechat) where T : IThrid
+        public T Create<T>(BrowserType sourceOption = BrowserType.Wechat) where T : IThird
         {
             return (T)CreateOAuth(sourceOption);
         }
@@ -53,7 +53,7 @@ namespace Nest.BaseCore.Payment.Service
         /// <param name="platformType"></param>
         /// <param name="sourceOption"></param>
         /// <returns></returns>
-        public T Create<T>(PaymentType type, PaymentPlatformType platformType, BrowserType sourceOption = BrowserType.Wechat, string acsSubNo = "") where T : IThrid
+        public T Create<T>(PaymentType type, PaymentPlatformType platformType, BrowserType sourceOption = BrowserType.Wechat, string acsSubNo = "") where T : IThird
         {
             if (type == PaymentType.Online)
             {

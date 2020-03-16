@@ -5,7 +5,7 @@ namespace Nest.BaseCore.Payment.PaymentSDK.AcsPay.AcsDataDic
     public enum AcsInvokedType
     {
         /// <summary>
-        /// 发起方 东莞Soways
+        /// 发起方 
         /// </summary>
         [Description("F")]
         Soway = 0,

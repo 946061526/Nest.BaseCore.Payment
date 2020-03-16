@@ -9,7 +9,7 @@ namespace Nest.BaseCore.Payment.Service
     /// <summary>
     /// 第三方平台接口
     /// </summary>
-    public interface IThrid
+    public interface IThird
     {
     }
 }

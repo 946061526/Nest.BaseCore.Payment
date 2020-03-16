@@ -9,7 +9,7 @@ namespace Nest.BaseCore.Payment.Service
     /// <summary>
     /// 支付服务
     /// </summary>
-    public abstract class PaymentBaseService : IPaymentService, IThridOAuth
+    public abstract class PaymentBaseService : IPaymentService, IThirdOAuth
     {
         /// <summary>
         /// 支付超时时间  分
@@ -26,6 +26,7 @@ namespace Nest.BaseCore.Payment.Service
                 return timeOut;
             }
         }
+
         /// <summary>
         /// 请求源
         /// </summary>
@@ -46,9 +47,16 @@ namespace Nest.BaseCore.Payment.Service
         /// </summary>
         /// <param name="code"></param>
         /// <returns></returns>
-        public abstract ThirdOpenAuthorizeViewModel GetThridOAuth(string code);
+        public abstract ThirdOpenAuthorizeViewModel GetThirdOAuth(string code);
 
-        public abstract string GetThridOAuthUrl(string redirectUrl, string state = "", ThridOAuthScope scope = ThridOAuthScope.SnsapiBase);
+        /// <summary>
+        /// 获取第三方授权地址
+        /// </summary>
+        /// <param name="redirectUrl"></param>
+        /// <param name="state"></param>
+        /// <param name="scope"></param>
+        /// <returns></returns>
+        public abstract string GetThirdOAuthUrl(string redirectUrl, string state = "", ThirdOAuthScope scope = ThirdOAuthScope.SnsapiBase);
 
         /// <summary>
         /// 支付结果通知
